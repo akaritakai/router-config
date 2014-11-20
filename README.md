@@ -13,6 +13,8 @@ The purpose of this configuration is to provide a secure router that provides se
 
 The primary use case for this configuration is a collection of VMs which need to host publically facing services where there are fewer public IP addresses than VMs.
 
+Another use case is having more public IP addresses than VMs and wanting to obscure where critical services are by making it discouraging for an attacker to enumerate your network.
+
 In addition to configuring the server as specified by the configuration files in this directory, you will have to install a number of packages
 
 ```sh
