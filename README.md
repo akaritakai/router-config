@@ -16,8 +16,10 @@ The primary use case for this configuration is a collection of VMs which need to
 In addition to configuring the server as specified by the configuration files in this directory, you will have to install a number of packages
 
 ```sh
+# Install DNS server
+apt-get install -f -y bind9 bind9utils 
 # Install DHCP server
-apt-get isntall -f -y isc-dhcp-server
+apt-get install -f -y isc-dhcp-server
 # Install iptables management
 apt-get install -f -y firehol
 apt-get install -f -y xtables-addons-common xtables-addons-dkms
