@@ -18,6 +18,10 @@ Another use case is having more public IP addresses than VMs and wanting to obsc
 In addition to configuring the server as specified by the configuration files in this directory, you will have to install a number of packages
 
 ```sh
+# Install SSH server
+apt-get install -f -y ssh
+ssh-keygen -b 4096 -t rsa -f /etc/ssh/ssh_host_rsa_key
+ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
 # Install NTP server
 apt-get install -f -y ntp
 # Install DNS server
