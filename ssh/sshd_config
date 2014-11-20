@@ -1,0 +1,50 @@
+# See the sshd_config(5) man page for more details
+
+# General Settings
+Port 22
+Protocol 2
+DebianBanner no
+UsePrivilegeSeparation yes
+
+# Key Settings
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+KeyRegenerationInterval 3600
+ServerKeyBits 4096
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+# Authentication
+LoginGraceTime 120
+PermitRootLogin without-password
+StrictModes yes
+UsePAM yes
+
+# Auth by Key
+RSAAuthentication yes
+PubkeyAuthentication yes
+
+# Auth by Host
+IgnoreRhosts yes
+RhostsRSAAuthentication no
+HostbasedAuthentication no
+
+# Auth by Password
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+PasswordAuthentication no
+
+# Cipher selection
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
+
+# Available Features
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+Banner /etc/ssh/banner
+AcceptEnv LANG LC_*
+Subsystem sftp /usr/lib/openssh/sftp-server
