@@ -1,7 +1,7 @@
 router-config
 =============
 
-Secure router configuration for Ubuntu 14.04
+Secure router configuration for a dedicated Ubuntu 14.04 server running btrfs as its primary file system with a public facing NIC at eth0 and an internal facing NIC at eth1.
 
 The purpose of this configuration is to provide a secure router that provides several advanced features such as
   1. Listening on any number of WAN addresses
