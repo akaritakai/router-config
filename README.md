@@ -12,3 +12,13 @@ The purpose of this configuration is to provide a secure router that provides se
   6. Provide DHCP/DNS services
 
 The primary use case for this configuration is a collection of VMs which need to host publically facing services where there are fewer public IP addresses than VMs.
+
+In addition to configuring the server as specified by the configuration files in this directory, you will have to install a number of packages
+
+```sh
+  # Install DHCP server
+  apt-get isntall -f -y isc-dhcp-server
+  # Install iptables management
+  apt-get install -f -y firehol
+  apt-get install -f -y xtables-addons-common xtables-addons-dkms
+```
