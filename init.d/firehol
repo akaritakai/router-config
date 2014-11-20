@@ -1,0 +1,85 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          firehol
+# Required-Start:    $network $local_fs $syslog
+# Required-Stop:     $network $local_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Description: Starts firehol firewall configuration
+# short-description: firehol firewall configuration
+### END INIT INFO
+
+#includes lsb functions
+. /lib/lsb/init-functions
+
+PATH=/sbin:/bin
+NAME=firehol
+DESC=Firewall
+
+test -x /sbin/firehol || exit 0
+
+set -e
+
+[ -r /etc/default/firehol ] && . /etc/default/firehol
+
+case "$START_FIREHOL" in
+  NO|no)
+    START_FIREHOL=NO
+  ;;
+  *)
+    START_FIREHOL=YES
+  ;;
+esac
+
+COMMAND="$1"
+test -n "$1" && shift
+
+case "$COMMAND" in
+  start)
+  if [ "$START_FIREHOL" = "NO" ]; then
+    log_warning_msg "$DESC disabled via /etc/default/firehol"
+    exit 0
+  else
+    log_daemon_msg "Starting $DESC" "$NAME"
+    /sbin/firehol start "$@" >/dev/null || log_end_msg 1
+    /sbin/iptables -I in_wan -p tcp -j TARPIT || log_end_msg 1
+    log_end_msg 0
+  fi
+  ;;
+  stop)
+  log_daemon_msg "Stopping $DESC" "$NAME"
+  /sbin/firehol stop "$@" >/dev/null || log_end_msg 1
+  log_end_msg 0
+  ;;
+  helpme|wizard)
+  log_daemon_msg  "Starting $NAME wizard" 1>&2
+  /sbin/firehol wizard
+  ;;
+  restart|force-reload)
+  if [ "$START_FIREHOL" = "NO" ]; then
+    log_warning_msg "$DESC disabled via /etc/default/firehol"
+    exit 0
+  else
+    log_daemon_msg "Restarting $DESC configuration"
+    /sbin/firehol restart "$@" >/dev/null || log_end_msg 1
+    /sbin/iptables -I in_wan -p tcp -j TARPIT || log_end_msg 1
+    log_action_end_msg 0
+  fi
+  ;;
+  status)
+  if [ "$START_FIREHOL" = "NO" ]; then
+    log_failure_msg "$DESC disabled via /etc/default/firehol"
+    exit 0
+  else
+    log_success_msg "$DESC enabled via /etc/default/firehol"
+    exit 4
+  fi
+  ;;
+  *)
+  N=/etc/init.d/$NAME
+  log_action_msg "Usage: $N {start|stop|restart|force-reload|status} [<args>]" >&2
+  exit 1
+  ;;
+esac
+
+exit 0
