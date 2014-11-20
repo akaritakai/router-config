@@ -1,0 +1,4 @@
+# Contains a list of public IP addresses that should be allocated on this gateway.
+# Protocol      IP Address              Netmask         Gateway
+  4             203.0.113.1             32              203.0.113.254
+  4             203.0.113.2             32              203.0.113.254
