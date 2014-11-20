@@ -1,0 +1,56 @@
+;
+; This is a BIND9 database file for the zone *.lan.net
+; It provides information for forward lookups for *.lan.net as well as
+; reverse lookups (RDNS).
+;
+
+; ==========
+; SOA Record
+; ==========
+$TTL    3600 ; How often the secondary DNS servers poll us for updates.
+             ; We have no secondaries, but this value is required
+
+; We establish firewall.lan.net as the authoritative DNS server for
+; the domain and hostmaster@lan.net as the administrative e-mail contact
+@       IN      SOA     firewall.lan.net.  hostmaster.lan.net. (
+                        2014112001      ; Serial - in format yyyymmdd (date) with ss at the end to
+                                        ; denote the nth revision for that day.
+                                        ; If you make a change to the DNS file, this /MUST/ be
+                                        ; changed. A utility `dnsreload` will be provided to
+                                        ; automatically do this and restart BIND.
+                        14400           ; Refresh -how often slaves will try to refresh the zone
+                                        ; from master.
+                        3600            ; Retry - time between retries if the slave fails to contact
+                                        ; master and the refresh time is expired.
+                        1209600         ; Expire - indicates when the zone data is no longer
+                                        ; authoritative (kicks in when the server is unavailable
+                                        ; for that length of time).
+                        3600 )          ; Negative Cache TTL - the length of time to cache
+                                        ; NXDOMAIN results.
+
+; ==========
+; NS Records
+; ==========
+                       IN      NS      firewall.lan.net.
+
+; =========
+; A Records
+; =========
+firewall               IN      A       10.0.0.1
+
+; ============
+; AAAA Records
+; ============
+
+; =============
+; CNAME Records
+; =============
+
+; ================
+; IPv4 PTR Records
+; (10.0.0.0/8)
+; ================
+; PTR addresses are declared in reverse
+; So, for example, if the server is authoritative for 10.0.0.0/8
+; Then 1.2.3 points to 10.3.2.1
+1.0.0                   IN      PTR     firewall.lan.net.
