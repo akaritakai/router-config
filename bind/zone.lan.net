@@ -16,8 +16,7 @@ $TTL    3600 ; How often the secondary DNS servers poll us for updates.
                         2014112001      ; Serial - in format yyyymmdd (date) with ss at the end to
                                         ; denote the nth revision for that day.
                                         ; If you make a change to the DNS file, this /MUST/ be
-                                        ; changed. A utility `dnsreload` will be provided to
-                                        ; automatically do this and restart BIND.
+                                        ; changed.
                         14400           ; Refresh -how often slaves will try to refresh the zone
                                         ; from master.
                         3600            ; Retry - time between retries if the slave fails to contact
