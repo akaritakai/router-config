@@ -1,0 +1,38 @@
+options {
+        directory "/var/cache/bind";
+
+        // If this server is not authoritative for a domain to be looked-up,
+        // BIND will use these DNS servers to resolve the query. You should
+        // only choose to put servers here that you trust to be reliable
+        // (secure) and consistently up.
+        forwarders {
+                // Google Public DNS
+                8.8.8.8;
+                8.8.4.4;
+                // OpenDNS
+                208.67.222.222;
+                208.67.220.220;
+        };
+
+        // If you find BIND giving you errors about DNSSEC or the root key
+        // being expired: there are two possibilities. The first is that your
+        // root key has expired and you need to update your key. You can see
+        // https://www.isc.org/bind-keys to update your key, but in all honesty
+        // it's probably that your system time has drifted too far off of real
+        // time and it's breaking all the crypto negotiations.
+
+        // The following lines provide DNSSEC look-up capability. If it gives
+        // you problems, you can choose to disable it, but you will not have
+        // the option of validating domains against DNSSEC.
+        dnssec-enable yes;
+        dnssec-validation auto;
+        dnssec-lookaside auto;
+
+        auth-nxdomain no;    # conform to RFC1035
+
+        // Only listen on localhost and your LAN network.
+        listen-on { 127.0.0.1; 10.0.0.1; };
+        // There should be no reason why we should support IPv6 unless we
+        // become an IPv6 router later.
+        listen-on-v6 { none; };
+};
