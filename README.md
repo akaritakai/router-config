@@ -16,6 +16,8 @@ The primary use case for this configuration is a collection of VMs which need to
 In addition to configuring the server as specified by the configuration files in this directory, you will have to install a number of packages
 
 ```sh
+# Install NTP server
+apt-get install -f -y ntp
 # Install DNS server
 apt-get install -f -y bind9 bind9utils 
 # Install DHCP server
