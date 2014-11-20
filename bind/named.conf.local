@@ -1,0 +1,21 @@
+//
+// Do any local configuration here. Domains that this server is authoritative for
+// should naturally be included here.
+//
+
+zone "internal.lan.net" {
+  type master;
+  file "/etc/bind/zone.lan.net";
+};
+
+zone "hosted.dns.net" {
+  type forward;
+  // The IP address of the server hosting the authoritative DNS
+  forwarders { 10.0.0.2; };
+};
+
+// RDNS for 10.0.0.0/8
+zone "10.in-addr.arpa" {
+  type master;
+  file "/etc/bind/zone.lan.net";
+};
