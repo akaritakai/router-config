@@ -22,6 +22,7 @@ In addition to configuring the server as specified by the configuration files in
 apt-get install -f -y ntp
 # Install DNS server
 apt-get install -f -y bind9 bind9utils 
+rndc-confgen -a -b 512
 # Install DHCP server
 apt-get install -f -y isc-dhcp-server
 # Install iptables management
