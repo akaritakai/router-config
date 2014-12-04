@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly IP=/sbin/ip
+IP="/sbin/ip"
 
 configure() {
   local mod=$1
@@ -13,6 +13,10 @@ configure() {
     local public_ip=${fields[1]}
     local netmask=${fields[2]}
     local gateway=${fields[3]}
+
+    if [[ "$protocol" == "6" ]]; then
+      IP="/sbin/ip -6"
+    fi
 
     $IP addr $mod $public_ip/$netmask dev eth0
     $IP route $mod $gateway dev eth0 src $public_ip table $i
